@@ -1,3 +1,6 @@
+
+@import url('https://fonts.googleapis.com/css?family=Aldrich|Open+Sans|Share+Tech+Mono');
+
 .App {
 
 }
@@ -13,6 +16,7 @@ header {
   background-color: #60ff6e;
   color: white;
   font-size: 3rem;
+  font-family: 'Aldrich', sans-serif;
 }
 
 .SearchBox {
@@ -28,6 +32,9 @@ header {
   width: 75%;
   margin: 0 auto;
   text-align: center;
+  border-style: none;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 }
 
 .ResultGrid {
@@ -38,8 +45,9 @@ header {
   top: 50%;
   margin-left: 12.5%;
   margin-right: 12.5%;
-  grid-template: auto / repeat(auto-fill, minmax(200px, 280px));
+  grid-template: auto / 1fr;
   grid-gap: 10px;
+  justify-content: center;
 }
 
 @media screen and (max-width: 800px) {
@@ -51,9 +59,43 @@ header {
 }
 
 .Result {
-  display: inline-flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  font-size: 3vh;
+  font-family: 'Open Sans', sans-serif;
+	color: #424242;
+  background-color: white;
+  padding: 5%;
+  border-radius: 10px;
+}
+
+.Result:hover {
+}
+
+.green {
+  background-color: #60ff6e;
+  color: white;
+}
+
+.red {
+  background-color: #ff4c4c;
+  color: white;
+}
+
+.name {
+  margin-bottom: 5%;
+  color: #424242;
+}
+
+.symbol {
+  margin-bottom: 10%;
+  color: #424242;
+}
+
+.high, .low, .changePercent, .latest {
+  text-align: center;
+  margin-bottom: 5%;
+  border-style: solid;
+  border-radius: 10px;
+  border-width: thin;
+  font-family: 'Aldrich', sans-serif;
 }
