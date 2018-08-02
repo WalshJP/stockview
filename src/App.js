@@ -21,6 +21,7 @@ class Result extends Component {
 
     this.onSelect = this.onSelect.bind(this);
     this.onLeave = this.onLeave.bind(this);
+    this.toggle = this.toggle.bind(this);
   }
 
   onSelect() {
@@ -29,6 +30,14 @@ class Result extends Component {
 
   onLeave() {
     this.props.onLeave();
+  }
+
+  toggle() {
+    if(this.props.showInfo === 1) {
+      this.onLeave();
+    } else {
+      this.onSelect(this.props.symbol);
+    }
   }
 
   render() {
@@ -43,7 +52,7 @@ class Result extends Component {
         color = 'green'
       }
     return (
-      <div className={"Result" + ' ' + color} onClick={this.onSelect} onMouseLeave={this.onLeave}>
+      <div className={"Result" + ' ' + color} onClick={this.toggle}>
         <div className="name">{this.props.name}</div>
         <div className="symbol">({this.props.symbol})</div>
         High<br />
@@ -58,7 +67,7 @@ class Result extends Component {
     )
   } else {
       return (
-        <div className="Result" onMouseEnter={this.onSelect} onMouseLeave={this.onLeave}>
+        <div className="Result" onClick={this.toggle}>
           <div className="name">{this.props.name}</div>
           <div className="symbol">({this.props.symbol})</div>
         </div>
@@ -73,6 +82,7 @@ class ResultGrid extends Component {
 
     this.onSelect = this.onSelect.bind(this);
     this.onLeave = this.onLeave.bind(this);
+    this.toggle = this.toggle.bind(this);
 }
 
   onSelect(symbol) {
@@ -83,16 +93,20 @@ class ResultGrid extends Component {
     this.props.onLeave();
   }
 
+  toggle() {
+    this.props.onToggle();
+  }
+
   render() {
     let numResults = this.props.numResults;
     let output = [];
     var i;
     for(i = 0; i < numResults; i++) {
       if(this.props.info.symbol === this.props.symbols[i]) {
-      output.push(<Result key={i} showInfo={1} info={this.props.info} name={this.props.names[i]} symbol={this.props.symbols[i]} onLeave={this.onLeave} onSelect={this.onSelect}/>);
+      output.push(<Result key={i} showInfo={1} info={this.props.info} name={this.props.names[i]} symbol={this.props.symbols[i]} onLeave={this.onLeave} onToggle={this.toggle} onSelect={this.onSelect}/>);
       }
       else {
-        output.push(<Result key={i} showInfo={0} info={this.props.info} name={this.props.names[i]} symbol={this.props.symbols[i]} onLeave={this.onLeave} onSelect={this.onSelect}/>);
+        output.push(<Result key={i} showInfo={0} info={this.props.info} name={this.props.names[i]} symbol={this.props.symbols[i]} onLeave={this.onLeave} onToggle={this.toggle} onSelect={this.onSelect}/>);
 
       }
     }
@@ -214,6 +228,7 @@ class App extends Component {
 		this.handleInfoUpdate = this.handleInfoUpdate.bind(this);
     this.runApi = this.runApi.bind(this);
     this.onLeave = this.onLeave.bind(this);
+    this.toggle = this.toggle.bind(this);
 	}
 
 	handleInfoUpdate(newNames, newSymbols, newNumResults) {
@@ -258,6 +273,14 @@ class App extends Component {
     this.setState({info: []});
   }
 
+  toggle() {
+    if(this.state.showInfo === 0) {
+      this.setState({showInfo: 1});
+    } else {
+      this.setState({showInfo: 0});
+    }
+  }
+
   render() {
     console.log('render: ');
     console.log(this.state.info);
@@ -267,7 +290,7 @@ class App extends Component {
             <span>NASDAQ Stock View</span>
           </header>
 		      <SearchBoxContainer onUpdateInfo={this.handleInfoUpdate} />
-          <ResultGrid info={this.state.info} showInfo={this.state.showInfo} names={this.state.names} symbols={this.state.symbols} numResults={this.state.numResults} onSelect={this.runApi} onLeave={this.onLeave} />
+          <ResultGrid info={this.state.info} showInfo={this.state.showInfo} names={this.state.names} symbols={this.state.symbols} numResults={this.state.numResults} onSelect={this.runApi} onLeave={this.onLeave} onToggle={this.toggle}/>
       </div>
     );
   }
