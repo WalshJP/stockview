@@ -38,9 +38,8 @@ header {
   top: 50%;
   margin-left: 12.5%;
   margin-right: 12.5%;
-  grid-template: 100% / repeat(5, 1fr);
+  grid-template: 1fr / repeat(auto-fill, minmax(200px, 280px));
   grid-gap: 10px;
-  align-items: right;
 }
 
 .Result {

@@ -30,7 +30,6 @@ class ResultGrid extends Component {
     for(i = 0; i < numResults; i++) {
       output.push(<Result key={i} name={this.props.values[i]}/>);
     }
-console.log(output);
     return (
       <div className="ResultGrid">
         {output}
