@@ -174,9 +174,7 @@ class SearchBoxContainer extends Component {
     let newNumResults = 0;
     let names = [];
     let symbols = [];
-    if(this.state.value == '') {
-      return;
-    }
+
     var i;
     for(i = 0; i < this.state.names.length; i++) {
       if(this.state.names[i].indexOf(newValue) === 0) {
