@@ -38,8 +38,16 @@ header {
   top: 50%;
   margin-left: 12.5%;
   margin-right: 12.5%;
-  grid-template: 1fr / repeat(auto-fill, minmax(200px, 280px));
+  grid-template: auto / repeat(auto-fill, minmax(200px, 280px));
   grid-gap: 10px;
+}
+
+@media screen and (max-width: 800px) {
+
+.ResultGrid {
+  grid-template: auto / 1fr;
+}
+
 }
 
 .Result {
