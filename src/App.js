@@ -64,7 +64,7 @@ class Result extends Component {
         Percent Change<br />
         <div className="changePercent">{this.props.info.changePercent}%</div>
         <br />
-        <button onClick="">News Related to {this.props.symbol}</button>
+        <button onClick={this.props.showNews}>News Related to {this.props.symbol}</button>
       </div>
     )
   } else {
@@ -105,7 +105,7 @@ class ResultGrid extends Component {
     var i;
     for(i = 0; i < numResults; i++) {
       if(this.props.info.symbol === this.props.symbols[i]) {
-      output.push(<Result key={i} showInfo={1} info={this.props.info} name={this.props.names[i]} symbol={this.props.symbols[i]} onLeave={this.onLeave} onToggle={this.toggle} onSelect={this.onSelect}/>);
+      output.push(<Result key={i} showNews={this.props.showNews} showInfo={1} info={this.props.info} name={this.props.names[i]} symbol={this.props.symbols[i]} onLeave={this.onLeave} onToggle={this.toggle} onSelect={this.onSelect}/>);
       }
       else {
         output.push(<Result key={i} showInfo={0} info={this.props.info} name={this.props.names[i]} symbol={this.props.symbols[i]} onLeave={this.onLeave} onToggle={this.toggle} onSelect={this.onSelect}/>);
@@ -283,6 +283,16 @@ class App extends Component {
     }
   }
 
+  showNews() {
+    let url = 'https://api.iextrading.com/1.0/stock/' + this.state.symbol + '/news';
+    fetch(url)
+    .then((res) => {
+      return res.json();
+    }).then((data) => {
+      
+    });
+  }
+
   render() {
     console.log('render: ');
     console.log(this.state.info);
@@ -292,7 +302,7 @@ class App extends Component {
             <span>NASDAQ Stock View</span>
           </header>
 		      <SearchBoxContainer onUpdateInfo={this.handleInfoUpdate} />
-          <ResultGrid info={this.state.info} showInfo={this.state.showInfo} names={this.state.names} symbols={this.state.symbols} numResults={this.state.numResults} onSelect={this.runApi} onLeave={this.onLeave} onToggle={this.toggle}/>
+          <ResultGrid showNews={this.showNews} info={this.state.info} showInfo={this.state.showInfo} names={this.state.names} symbols={this.state.symbols} numResults={this.state.numResults} onSelect={this.runApi} onLeave={this.onLeave} onToggle={this.toggle}/>
       </div>
     );
   }
