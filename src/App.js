@@ -63,6 +63,8 @@ class Result extends Component {
         <div className="low">${this.props.info.low}</div>
         Percent Change<br />
         <div className="changePercent">{this.props.info.changePercent}%</div>
+        <br />
+        <button onClick="">News Related to {this.props.symbol}</button>
       </div>
     )
   } else {

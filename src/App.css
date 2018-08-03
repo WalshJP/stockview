@@ -68,7 +68,16 @@ header {
   border-radius: 10px;
 }
 
-.Result:hover {
+.Result button {
+  font-size: 3vh;
+  width: 50%;
+  margin-left: 25%;
+  margin-right: 25%;
+  border: 0;
+  background-color: white;
+  color: #424242;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 0px;
 }
 
 .green {
