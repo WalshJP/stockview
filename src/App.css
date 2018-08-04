@@ -25,6 +25,8 @@ header {
   width: 100%;
 }
 
+@media screen and (min-width: 800px) {
+
 .SearchBox input{
 	font-size: 3rem;
 	color: #424242;
@@ -34,6 +36,8 @@ header {
   text-align: center;
   border-style: none;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
 
 }
 
@@ -55,7 +59,6 @@ header {
 .ResultGrid {
   grid-template: auto / 1fr;
 }
-
 }
 
 .Result {

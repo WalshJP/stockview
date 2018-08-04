@@ -65,6 +65,7 @@ class Result extends Component {
         <div className="changePercent">{this.props.info.changePercent}%</div>
         <br />
         <button onClick={this.props.showNews}>News Related to {this.props.symbol}</button>
+        {this.props.newsStories[0]}
       </div>
     )
   } else {
@@ -105,7 +106,7 @@ class ResultGrid extends Component {
     var i;
     for(i = 0; i < numResults; i++) {
       if(this.props.info.symbol === this.props.symbols[i]) {
-      output.push(<Result key={i} showNews={this.props.showNews} showInfo={1} info={this.props.info} name={this.props.names[i]} symbol={this.props.symbols[i]} onLeave={this.onLeave} onToggle={this.toggle} onSelect={this.onSelect}/>);
+      output.push(<Result key={i} newsStories={this.props.newsStories} showNews={this.props.showNews} showInfo={1} info={this.props.info} name={this.props.names[i]} symbol={this.props.symbols[i]} onLeave={this.onLeave} onToggle={this.toggle} onSelect={this.onSelect}/>);
       }
       else {
         output.push(<Result key={i} showInfo={0} info={this.props.info} name={this.props.names[i]} symbol={this.props.symbols[i]} onLeave={this.onLeave} onToggle={this.toggle} onSelect={this.onSelect}/>);
@@ -226,11 +227,14 @@ class App extends Component {
       numResults: 0,
       showInfo: 0,
       info: [],
+      activeSymbol: '',
+      newsStories: [],
 		}
 		this.handleInfoUpdate = this.handleInfoUpdate.bind(this);
     this.runApi = this.runApi.bind(this);
     this.onLeave = this.onLeave.bind(this);
     this.toggle = this.toggle.bind(this);
+    this.showNews = this.showNews.bind(this);
 	}
 
 	handleInfoUpdate(newNames, newSymbols, newNumResults) {
@@ -267,6 +271,7 @@ class App extends Component {
 
         this.setState({showInfo: 1});
         this.setState({info: newInfo});
+        this.setState({activeSymbol: symbol});
       });
   }
 
@@ -284,12 +289,21 @@ class App extends Component {
   }
 
   showNews() {
-    let url = 'https://api.iextrading.com/1.0/stock/' + this.state.symbol + '/news';
+    let url = 'https://api.iextrading.com/1.0/stock/' + this.state.activeSymbol + '/news';
+    let stories = [];
+    console.log(url);
     fetch(url)
     .then((res) => {
       return res.json();
     }).then((data) => {
-      
+      console.log(data);
+      var i;
+
+      for(i = 0; i < data.length; i++) {
+        stories.push(data[i][url]);
+      }
+
+      this.setState({newsStories: stories});
     });
   }
 
@@ -302,7 +316,7 @@ class App extends Component {
             <span>NASDAQ Stock View</span>
           </header>
 		      <SearchBoxContainer onUpdateInfo={this.handleInfoUpdate} />
-          <ResultGrid showNews={this.showNews} info={this.state.info} showInfo={this.state.showInfo} names={this.state.names} symbols={this.state.symbols} numResults={this.state.numResults} onSelect={this.runApi} onLeave={this.onLeave} onToggle={this.toggle}/>
+          <ResultGrid newsStories={this.state.newsStories} showNews={this.showNews} info={this.state.info} showInfo={this.state.showInfo} names={this.state.names} symbols={this.state.symbols} numResults={this.state.numResults} onSelect={this.runApi} onLeave={this.onLeave} onToggle={this.toggle}/>
       </div>
     );
   }
